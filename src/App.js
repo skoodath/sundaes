@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [buttonColor, setButtonColor] = useState("red");
+  const [disabled, setDisabled] = useState(false);
+
+  const newButtonColor = buttonColor === "red" ? "blue" : "red";
+
+  const style = {
+    button: {
+      backgroundColor: disabled ? "gray" : buttonColor,
+      color: "#ffffff",
+      border: "1px solid transparent",
+      padding: "0.5rem 1rem",
+      margin: "1rem",
+      cursor: "pointer",
+      outline: "1px solid transparent",
+      borderRadius: "5px",
+    },
+  };
+  const changeColor = () => {
+    setButtonColor(newButtonColor);
+  };
+  const handleCheckBox = (e) => {
+    setDisabled(e.target.checked);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button style={style.button} onClick={changeColor} disabled={disabled}>
+        Change to {newButtonColor}
+      </button>
+      <input
+        type="checkbox"
+        id="toggle-button-state"
+        defaultChecked={disabled}
+        onChange={handleCheckBox}
+      />
+      <label htmlFor="toggle-button-state">Disable button</label>
     </div>
   );
 }
