@@ -3,15 +3,22 @@ import axios from "axios";
 import ScoopOptions from "./ScoopOptions";
 import Row from "react-bootstrap/Row";
 import ToppingsOption from "./ToppingsOption";
+import AlertBanner from "../common/AlertBanner";
 
 const Options = ({ optionType }) => {
   const [items, setItems] = useState([]);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     axios
       .get(`http://localhost:3030/${optionType}`)
       .then((response) => setItems(response.data))
-      .catch((error) => {});
+      .catch((error) => {
+        setError(true);
+      });
   }, [optionType]);
+
+  if (error) return <AlertBanner />;
 
   const ItemComponent = optionType === "scoops" ? ScoopOptions : ToppingsOption;
 
