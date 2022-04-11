@@ -1,7 +1,12 @@
 import React from "react";
+import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 
-const ScoopOptions = ({ name, imagePath }) => {
+const ScoopOptions = ({ name, imagePath, updateItemCount }) => {
+  const handleChange = (event) => {
+    updateItemCount(name, event.target.value);
+  };
   const myStyle = {
     columnStyle: {
       textAlign: "center",
@@ -20,6 +25,22 @@ const ScoopOptions = ({ name, imagePath }) => {
         alt={`${name} scoop`}
         style={imgStyle}
       />
+      <Form.Group
+        controlId={`${name}-count`}
+        as={Row}
+        style={{ marginTop: "10px" }}
+      >
+        <Form.Label column xs='6' style={{ textAlign: "right" }}>
+          {name}
+        </Form.Label>
+        <Col xs='5' style={{ textAlign: "left" }}>
+          <Form.Control
+            type='number'
+            defaultValue={0}
+            onChange={handleChange}
+          />
+        </Col>
+      </Form.Group>
     </Col>
   );
 };
